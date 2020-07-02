@@ -1,7 +1,8 @@
 Pix2Pix 모델 추론 가속
 ========================
 
-convolution 연산을 가속시키기 위한 방법으로 im2col 방법을 이용했다. im2col 방식은 input matrix를 하나의 큰 matrix로 바꾼 뒤, matrix multlication 연산을 통해 convolution 연산을 해결하는 방법이다. matrix multiplication은 규칙적인 memory access를 통해 연산이 이루어지므로 실행 속도가 빠르고 최적화하기 쉽기 때문에 해당 방법을 채택했다.
+convolution 연산을 가속시키기 위한 방법으로 im2col 방법을 이용했다. im2col 방식은 input matrix를 하나의 큰 matrix로 바꾼 뒤, matrix multlication 연산을 통해 convolution 연산을 해결하는 방법이다. 
+
 transposed convolution 연산도 같은 방법으로 해결하기 위해 convolution 연산으로 치환하여 해결했다. input matrix의 각 행과 열 사이에 zero padding을 하여, input matrix를 2배로 늘려주는 연산을 진행한 뒤, C 와 K dimension을 transpose 한 filter를 이용했다. 정리하자면 아래와 같다.
 
 (1) Convolution = ‘im2col’ + ‘mat mul’ + ‘add bias’
